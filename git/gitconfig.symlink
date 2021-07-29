@@ -128,6 +128,7 @@
 [push]
     # push will only do the current branch, not all branches
     default = current
+	gpgsign = if-asked
 [branch]
     # set up 'git pull' to rebase instead of merge
     autosetuprebase = always
@@ -165,3 +166,12 @@
 [pager]
     diff = "diff-so-fancy | less --tabs=4 -RFX"
     show = "diff-so-fancy | less --tabs=4 -RFX"
+[user]
+	signingkey = 7C2B052DAC15D4D7
+[commit]
+	#gpgsign = true
+	#gpgsign = if-asked
+[gpg]
+	program = /usr/local/bin/gpg
+[url "git@git.soma.salesforce.com:"]
+	insteadOf = https://git.soma.salesforce.com
