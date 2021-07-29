@@ -195,6 +195,12 @@ call plug#begin('~/.config/nvim/plugged')
     " edit gitconfig
     map <leader>eg :e! ~/.gitconfig<cr>
 
+    " edit notes file
+    map <leader>en :e! ~/env/notes/notes.log<cr>
+
+    " edit ~/.zshrc
+    map <leader>ez :e! ~/.zshrc<cr>
+
     " clear highlighted search
     noremap <space> :set hlsearch! hlsearch?<cr>
 
@@ -241,6 +247,10 @@ call plug#begin('~/.config/nvim/plugged')
     inoremap ˚ <Esc>:m .-2<cr>==gi
     vnoremap ∆ :m '>+1<cr>gv=gv
     vnoremap ˚ :m '<-2<cr>gv=gv
+
+    nnoremap π :bprev<cr>
+    nnoremap ˙ :bnext<cr>
+    nnoremap ¬ :ls<cr>
 
     vnoremap $( <esc>`>a)<esc>`<i(<esc>
     vnoremap $[ <esc>`>a]<esc>`<i[<esc>
@@ -442,7 +452,7 @@ call plug#begin('~/.config/nvim/plugged')
             \ 'rg --column --line-number --no-heading --follow --color=always '.<q-args>.' || true', 1,
             \ <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'), <bang>0)
         command! -bang -nargs=? -complete=dir Files
-            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+            \ call fzf#vim#files(<q-args>, fzf#vim#with_zreview(), <bang>0)
         command! -bang -nargs=? -complete=dir GitFiles
             \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
         function! RipgrepFzf(query, fullscreen)
