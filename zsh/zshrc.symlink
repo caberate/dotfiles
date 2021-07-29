@@ -104,6 +104,8 @@ zstyle ':completion:*' insert-tab pending
 # default to file completion
 zstyle ':completion:*' completer _expand _complete _files _correct _approximate
 
+# change LSCOLORS
+export LSCOLORS='cxfxcxdxbxegedabagacad'
 
 ########################################################
 # Plugin setup
@@ -178,6 +180,7 @@ fi
 
 # use nvim, but don't make me think about it
 [[ -n "$(command -v nvim)" ]] && alias vim="nvim"
+[[ -n "$(command -v nvim)" ]] && alias vi="nvim"
 
 # Filesystem aliases
 alias ..='cd ..'
@@ -188,6 +191,7 @@ alias .....="cd ../../../.."
 alias l="ls -lah ${colorflag}"
 alias la="ls -AF ${colorflag}"
 alias ll="ls -lFh ${colorflag}"
+alias dir="ls -aFht ${colorflag}"
 alias lld="ls -l | grep ^d"
 alias rmf="rm -rf"
 
@@ -209,8 +213,8 @@ alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 alias clsym="find -L . -name . -o -type d -prune -o -type l -exec rm {} +"
 
 # git aliases
-alias gs='git s'
-alias glog="git l"
+alias gs='git status'
+alias glog="git log"
 
 # tmux aliases
 alias ta='tmux attach'
@@ -221,6 +225,40 @@ alias tns='tmux new-session -s'
 alias lpath='echo $PATH | tr ":" "\n"' # list the PATH separated by new lines
 
 alias nr="npm run"
+alias cls="clear"
+alias lt="ls -alt"
+alias h="history"
+alias gr='git remote -v'
+alias gb='git branch '
+alias honu="cd ~/work/honu_dev/"
+zlias tako="cd ~/work/tako_dev"
+alias 2hd="cd ~/work/honu_dev/docker/honu_centos7"
+alias 2hr="cd ~/work/honu_dev/docker/runner"
+alias rel2="ssh ops0-release2-1-prd.eng.sfdc.net "
+alias rel1="ssh ops0-release1-1-prd.eng.sfdc.net "
+alias can3="ssh sec0-honucanary3-1-prd.eng.sfdc.net "
+alias can1="ssh sec0-honucanary1-1-prd.eng.sfdc.net "
+alias can2="ssh sec0-honucanary2-1-prd.eng.sfdc.net "
+
+export HONU_LOCAL_PATH=~/work/honu_dev/
+alias hb="docker run --name honu-builder -v $HONU_LOCAL_PATH:/honu -it -d honu-builder"
+alias utest="docker run --name ut-runner -v $HONU_LOCAL_PATH:/honu -it -d honu-builder"
+alias 2hb="docker exec -it honu-builder /bin/bash "
+alias 2hc="docker exec -it honu-client /bin/bash "
+alias 2hs="docker exec -it honu-server /bin/bash "
+alias 2piab="ssh -i ~/key_store/jing-piab5.key centos@10.233.192.205"
+alias 2piab2="ssh -i ~/key_store/jw-puppet-key1.key 10.233.140.116"
+alias bench="wrk -t12 -c500 -d30s http://localhost:8888/100k"
+alias bench2="ab -n 10000 -c 128 http://localhost:8888/100k"
+alias ut="cd $HONU_LOCAL_PATH; ./docker_build.sh --no-copy-build --no-coverage --build-type Debug"
+alias note="vi ~/env/notes/notes.log "
+
+# live access
+
+export GPG_TTY=$(tty)
+export GOPATH=$HOME/go:$HONU_LOCAL_PATH/tako/
 
 source "$DOTFILES/zsh/utils.zsh"
 source "$DOTFILES/zsh/prompt.zsh"
+#export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$HOME/bin:$PATH"
