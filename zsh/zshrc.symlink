@@ -234,24 +234,34 @@ alias honu="cd ~/work/honu_dev/"
 alias tako="cd ~/work/tako_dev"
 alias 2hd="cd ~/work/honu_dev/docker/honu_centos7"
 alias 2hr="cd ~/work/honu_dev/docker/runner"
+alias 2ht="cd ~/work/honu_test"
 alias rel2="ssh ops0-release2-1-prd.eng.sfdc.net "
 alias rel1="ssh ops0-release1-1-prd.eng.sfdc.net "
-alias can3="ssh sec0-honucanary3-1-prd.eng.sfdc.net "
 alias can1="ssh sec0-honucanary1-1-prd.eng.sfdc.net "
 alias can2="ssh sec0-honucanary2-1-prd.eng.sfdc.net "
+alias can3="ssh sec0-honucanary3-1-prd.eng.sfdc.net "
+#  
+alias cdws="ssh shared0-samminioncdws1-1-prd.eng.sfdc.net "
 
 export HONU_LOCAL_PATH=~/work/honu_dev/
+alias hd="docker run --name honu-dev --cap-add sys_ptrace -p127.0.0.1:2222:22 -v $HONU_LOCAL_PATH:/honu -it -d clion-honu"
+alias 2hd="docker exec -it honu-dev /bin/bash "
 alias hb="docker run --name honu-builder -v $HONU_LOCAL_PATH:/honu -it -d honu-builder"
 alias utest="docker run --name ut-runner -v $HONU_LOCAL_PATH:/honu -it -d honu-builder"
 alias 2hb="docker exec -it honu-builder /bin/bash "
 alias 2hc="docker exec -it honu-client /bin/bash "
 alias 2hs="docker exec -it honu-server /bin/bash "
-alias 2piab="ssh -i ~/key_store/jing-piab5.key centos@10.233.192.205"
-alias 2piab2="ssh -i ~/key_store/jw-puppet-key1.key 10.233.140.116"
+# piab permanent host  
+alias 2piab="ssh -i ~/key_store/cloud.key centos@10.233.140.114"
+alias 2piab2="ssh -i ~/key_store/jw-puppet-key1.key centos@10.233.140.125"
 alias bench="wrk -t12 -c500 -d30s http://localhost:8888/100k"
 alias bench2="ab -n 10000 -c 128 http://localhost:8888/100k"
 alias ut="cd $HONU_LOCAL_PATH; ./docker_build.sh --no-copy-build --no-coverage --build-type Debug"
 alias note="vi ~/env/notes/notes.log "
+alias btk="cd ~/work/tako_dev; docker run -it -v ~/work/tako_dev:/tako honu-builder scl enable devtoolset-7 \"make -C tako\""
+# 
+alias bld="./build.sh --no-coverage --no-unit-test -t Debug; mv -f honu-1.2.0-1.el7.x86_64.rpm rpm/"
+# 
 
 # live access
 

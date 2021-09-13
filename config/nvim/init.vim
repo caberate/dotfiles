@@ -497,6 +497,7 @@ call plug#begin('~/.config/nvim/plugged')
         nmap <leader>ge :Gedit<cr>
         nmap <silent><leader>gr :Gread<cr>
         nmap <silent><leader>gb :G blame<cr>
+        nmap <silent><leader>gd :Gdiffsplit<cr>
 
         Plug 'tpope/vim-rhubarb' " hub extension for fugitive
         Plug 'sodapopcan/vim-twiggy'
