@@ -1,5 +1,5 @@
 [init]
-    defaultBranch = main
+    defaultBranch = master
 [include]
     # A local gitconfig, outside of version control.
     # If the file doesn't exist it is silently ignored
@@ -50,7 +50,7 @@
     empty = commit --allow-empty
 
     # current branch
-    cbr = rev-parse --abbrev-ref HEAD
+    cbr = rev-parse --abbrev-ref head
 
     # submodule shortcuts
     si = submodule init
@@ -60,13 +60,13 @@
     # show number of commits per contributer, sorted
     count = shortlog -sn
 
-    undo = reset --soft HEAD~1
+    undo = reset --soft head~1
     amend = commit -a --amend
 
     cleanup = "!git remote prune origin && git gc && git clean -df && git stash clear"
 
     # rebase the current branch with changes from upstream remote
-    update = !git fetch upstream && git rebase upstream/`git rev-parse --abbrev-ref HEAD`
+    update = !git fetch upstream && git rebase upstream/`git rev-parse --abbrev-ref head`
 
     # tag aliases
     # show the last tag
@@ -168,6 +168,8 @@
     show = "diff-so-fancy | less --tabs=4 -RFX"
 [user]
 	signingkey = 7C2B052DAC15D4D7
+	name = James Wang
+	email = jiwang@salesforce.com
 [commit]
 	#gpgsign = true
 	#gpgsign = if-asked
@@ -175,3 +177,8 @@
 	program = /usr/local/bin/gpg
 [url "git@git.soma.salesforce.com:"]
 	insteadOf = https://git.soma.salesforce.com
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

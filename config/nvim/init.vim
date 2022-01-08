@@ -383,6 +383,7 @@ call plug#begin('~/.config/nvim/plugged')
 
         let g:startify_bookmarks = [
             \ { 'c': '~/.config/nvim/init.vim' },
+            \ { 'n': '~/env/notes/notes.log' },
             \ { 'g': '~/.gitconfig' },
             \ { 'z': '~/.zshrc' }
         \ ]

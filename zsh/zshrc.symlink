@@ -182,6 +182,8 @@ fi
 [[ -n "$(command -v nvim)" ]] && alias vim="nvim"
 [[ -n "$(command -v nvim)" ]] && alias vi="nvim"
 
+export HONU_LOCAL_PATH=~/work/shaurya_honu/
+
 # Filesystem aliases
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -232,8 +234,9 @@ alias lt="ls -alt"
 alias h="history"
 alias gr='git remote -v'
 alias gb='git branch '
-alias honu="cd ~/work/honu_dev/"
+alias honu="cd $HONU_LOCAL_PATH"
 alias tako="cd ~/work/tako_dev"
+alias ec="cd ~/work/honu_dev/config/envoy-config"
 alias 2hd="cd ~/work/honu_dev/docker/honu_centos7"
 alias 2hr="cd ~/work/honu_dev/docker/runner"
 alias 2ht="cd ~/work/honu_test"
@@ -244,8 +247,9 @@ alias can2="ssh sec0-honucanary2-1-prd.eng.sfdc.net "
 alias can3="ssh sec0-honucanary3-1-prd.eng.sfdc.net "
 #  
 alias cdws="ssh shared0-samminioncdws1-1-prd.eng.sfdc.net "
+alias cdws2="ssh shared0-samminioncdws2-1-prd.eng.sfdc.net "
+alias cdws3="ssh shared0-samminioncdws3-1-prd.eng.sfdc.net "
 
-export HONU_LOCAL_PATH=~/work/honu_dev/
 alias hd="docker run --name honu-dev --cap-add sys_ptrace -p127.0.0.1:2222:22 -v $HONU_LOCAL_PATH:/honu -it -d clion-honu"
 alias 2hd="docker exec -it honu-dev /bin/bash "
 alias hb="docker run --name honu-builder -v $HONU_LOCAL_PATH:/honu -it -d honu-builder"
@@ -263,8 +267,8 @@ alias note="vi ~/env/notes/notes.log "
 alias btk="cd ~/work/tako_dev; docker run -it -v ~/work/tako_dev:/tako honu-builder scl enable devtoolset-7 \"make -C tako\""
 # 
 alias bld="./build.sh --no-coverage --no-unit-test -t Debug; mv -f honu-1.2.0-1.el7.x86_64.rpm rpm/"
+alias mist58="cat ~/work/honu-deploy/host_list/mist58.lst.orig "
 # 
-
 # live access
 
 export GPG_TTY=$(tty)
@@ -273,4 +277,4 @@ export GOPATH=$HOME/go:$HONU_LOCAL_PATH/tako/
 source "$DOTFILES/zsh/utils.zsh"
 source "$DOTFILES/zsh/prompt.zsh"
 #export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$HOME/go/bin:$PATH"
