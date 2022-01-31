@@ -28,7 +28,8 @@ COLOR_WHITE="\e[1;37m"
 COLOR_NONE="\e[0m"
 
 if [ -z "$TMUX" ]; then
-    export TERM=xterm-256color-italic
+    #export TERM=xterm-256color-italic
+    export TERM=xterm-256color
 else
     export TERM=tmux-256color
 fi
@@ -182,7 +183,10 @@ fi
 [[ -n "$(command -v nvim)" ]] && alias vim="nvim"
 [[ -n "$(command -v nvim)" ]] && alias vi="nvim"
 
-export HONU_LOCAL_PATH=~/work/shaurya_honu/
+export HONU_LOCAL_PATH=~/work/honu_hotfix/
+#export HONU_LOCAL_PATH=~/work/honu_master/
+#export HONU_LOCAL_PATH=~/work/shaurya_honu/
+#export HONU_LOCAL_PATH=~/work/honu_dev/
 
 # Filesystem aliases
 alias ..='cd ..'
@@ -264,10 +268,15 @@ alias bench="wrk -t12 -c500 -d30s http://localhost:8888/100k"
 alias bench2="ab -n 10000 -c 128 http://localhost:8888/100k"
 alias ut="cd $HONU_LOCAL_PATH; ./docker_build.sh --no-copy-build --no-coverage --build-type Debug"
 alias note="vi ~/env/notes/notes.log "
-alias btk="cd ~/work/tako_dev; docker run -it -v ~/work/tako_dev:/tako honu-builder scl enable devtoolset-7 \"make -C tako\""
+alias btk="cd ~/work/tako_dev; docker run -it -v ~/work/tako_dev:/tako honu-builder scl enable devtoolset-7 \"make -C tako test\""
 # 
 alias bld="./build.sh --no-coverage --no-unit-test -t Debug; mv -f honu-1.2.0-1.el7.x86_64.rpm rpm/"
 alias mist58="cat ~/work/honu-deploy/host_list/mist58.lst.orig "
+alias 2env="cd ~/env "
+alias 2stage="cd ~/env/bin "
+alias 2prd="cd ~/env/prd "
+alias 2hl="cd ~/env/host_list "
+alias 2ed="cd ~/work/envoy-deploy "
 # 
 # live access
 
