@@ -253,6 +253,7 @@ alias can3="ssh sec0-honucanary3-1-prd.eng.sfdc.net "
 alias cdws="ssh shared0-samminioncdws1-1-prd.eng.sfdc.net "
 alias cdws2="ssh shared0-samminioncdws2-1-prd.eng.sfdc.net "
 alias cdws3="ssh shared0-samminioncdws3-1-prd.eng.sfdc.net "
+alias cdwsx="ssh shared0-samminioncdws1-1-xrd.eng.sfdc.net "
 
 alias hd="docker run --name honu-dev --cap-add sys_ptrace -p127.0.0.1:2222:22 -v $HONU_LOCAL_PATH:/honu -it -d clion-honu"
 alias 2hd="docker exec -it honu-dev /bin/bash "
@@ -271,7 +272,9 @@ alias note="vi ~/env/notes/notes.log "
 alias btk="cd ~/work/tako_dev; docker run -it -v ~/work/tako_dev:/tako honu-builder scl enable devtoolset-7 \"make -C tako test\""
 # 
 alias bld="./build.sh --no-coverage --no-unit-test -t Debug; mv -f honu-1.2.0-1.el7.x86_64.rpm rpm/"
-alias mist58="cat ~/work/honu-deploy/host_list/mist58.lst.orig "
+alias mist58="cat ~/env/host_list/mist58"
+alias mist30="cat ~/env/host_list/mist30_prd"
+alias mist71="cat ~/env/host_list/mist71_xrd"
 alias 2env="cd ~/env "
 alias 2stage="cd ~/env/bin "
 alias 2prd="cd ~/env/prd "
@@ -282,6 +285,7 @@ alias 2ed="cd ~/work/envoy-deploy "
 
 export GPG_TTY=$(tty)
 export GOPATH=$HOME/go:$HONU_LOCAL_PATH/tako/
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 
 source "$DOTFILES/zsh/utils.zsh"
 source "$DOTFILES/zsh/prompt.zsh"
