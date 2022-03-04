@@ -183,10 +183,10 @@ fi
 [[ -n "$(command -v nvim)" ]] && alias vim="nvim"
 [[ -n "$(command -v nvim)" ]] && alias vi="nvim"
 
-export HONU_LOCAL_PATH=~/work/honu_hotfix/
+#export HONU_LOCAL_PATH=~/work/honu_hotfix/
 #export HONU_LOCAL_PATH=~/work/honu_master/
 #export HONU_LOCAL_PATH=~/work/shaurya_honu/
-#export HONU_LOCAL_PATH=~/work/honu_dev/
+export HONU_LOCAL_PATH=~/work/honu_dev/
 
 # Filesystem aliases
 alias ..='cd ..'
@@ -275,6 +275,7 @@ alias bld="./build.sh --no-coverage --no-unit-test -t Debug; mv -f honu-1.2.0-1.
 alias mist58="cat ~/env/host_list/mist58"
 alias mist30="cat ~/env/host_list/mist30_prd"
 alias mist71="cat ~/env/host_list/mist71_xrd"
+alias istla7="grep istla7 ~/env/host_list/lapp_prd | sort "
 alias 2env="cd ~/env "
 alias 2stage="cd ~/env/bin "
 alias 2prd="cd ~/env/prd "
