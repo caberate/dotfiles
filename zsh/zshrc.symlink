@@ -234,7 +234,7 @@ alias ss="source ~/.zshrc"
 alias vs="vi ~/.zshrc"
 alias nr="npm run"
 alias cls="clear"
-alias lt="ls -alt"
+alias lt="ls -altG | more"
 alias h="history"
 alias gr='git remote -v'
 alias gb='git branch '
@@ -282,11 +282,12 @@ alias 2stage="cd ~/env/bin "
 alias 2prd="cd ~/env/prd "
 alias 2hl="cd ~/env/host_list "
 alias 2ed="cd ~/work/envoy-deploy "
+alias 2eit="cd ~/work/honu_dev/config/eitserv/ "
 # 
 # live access
 
 export GPG_TTY=$(tty)
-export GOPATH=$HOME/go:$HONU_LOCAL_PATH/tako/
+export GOPATH=$HOME/go:~/work/eitserv/:$HONU_LOCAL_PATH/tako/
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 
 source "$DOTFILES/zsh/utils.zsh"

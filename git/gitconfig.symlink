@@ -171,8 +171,9 @@
 	name = James Wang
 	email = jiwang@salesforce.com
 [commit]
-	#gpgsign = true
-	#gpgsign = if-asked
+	gpgsign = true
+[push]
+	gpgsign = if-asked
 [gpg]
 	program = /usr/local/bin/gpg
 [url "git@git.soma.salesforce.com:"]
