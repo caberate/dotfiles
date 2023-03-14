@@ -5,6 +5,10 @@
 call functions#PlugLoad()
 call plug#begin('~/.config/nvim/plugged')
 
+iabbrev jw James Wang 
+iabbrev @@ jiwang@salesforce.com
+iabbrev <expr> dt strftime( "%c")
+
 " General {{{
     " Abbreviations
     abbr funciton function
