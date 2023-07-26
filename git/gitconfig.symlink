@@ -169,7 +169,8 @@
 [user]
 	signingkey = 7C2B052DAC15D4D7
 	name = James Wang
-	email = jiwang@salesforce.com
+        email = jwang.job@gmail.com
+	#email = jiwang@salesforce.com
 [commit]
 	gpgsign = true
 [push]

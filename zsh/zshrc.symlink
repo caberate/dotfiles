@@ -187,6 +187,7 @@ fi
 #export HONU_LOCAL_PATH=~/work/honu_master/
 #export HONU_LOCAL_PATH=~/work/shaurya_honu/
 export HONU_LOCAL_PATH=~/work/honu_dev/
+export HONU_EL9_LOCAL_PATH=~/review/rhel9/
 export SAFE_LOCAL_PATH=~/work/safe_dev/
 
 # Filesystem aliases
@@ -262,11 +263,12 @@ alias cdwsx="ssh shared0-samminioncdws1-1-xrd.eng.sfdc.net "
 
 alias hd="docker run --name honu-dev --cap-add sys_ptrace -p127.0.0.1:2222:22 -v $HONU_LOCAL_PATH:/honu -it -d clion-honu"
 alias 2hd="docker exec -it honu-dev /bin/bash "
+alias el9="docker build -t honu-el9 $HONU_EL9_LOCAL_PATH:docker/honu_centos7/. "
 alias hb="docker run --name honu-builder -v $HONU_LOCAL_PATH:/honu -it -d honu-builder"
-alias sb="docker run --name safe-builder -v $SAFE_LOCAL_PATH:/safe_dev -it -d safe-runner"
+alias hb9="docker run --name honu-el9-builder -v $HONU_EL9_LOCAL_PATH:/honu -it -d honu-el9-builder"
+alias 2hb9="docker exec -it honu-el9-builder /bin/bash"
 alias utest="docker run --name ut-runner -v $HONU_LOCAL_PATH:/honu -it -d honu-builder"
 alias 2hb="docker exec -it honu-builder /bin/bash "
-alias 2sb="docker exec -it safe-builder /bin/bash "
 alias 2hc="docker exec -it honu-client /bin/bash "
 alias 2hs="docker exec -it honu-server /bin/bash "
 # piab permanent host  
@@ -288,6 +290,7 @@ alias istla4="grep istla4 ~/env/host_list/lapp_prd | sort "
 alias 2env="cd ~/env "
 alias k="kubectl "
 alias kpods="kubectl get pods --all-namespaces"
+
 alias 2stage="cd ~/env/bin "
 alias 2prd="cd ~/env/prd "
 alias 2hl="cd ~/env/host_list "
@@ -296,6 +299,11 @@ alias 2eit="cd ~/work/honu_dev/config/eitserv/ "
 alias python="/usr/local/bin/python3"
 alias safe2='cd ~/tanium_dev/safe/tanium_sensor'
 alias ec2='ssh -i ~/tanium_dev/jw_tanium_key1.pem ec2-user@35.88.249.149 ' 
+
+# CipherForce Dev-Work
+alias sb="docker run --name safe-builder -v $SAFE_LOCAL_PATH:/safe_dev -it -d safe-runner"
+alias 2sb="docker exec -it safe-builder /bin/bash "
+alias 2cf='cd ~/work/safeagent'
 
 # # 
 # live access
