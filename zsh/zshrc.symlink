@@ -188,8 +188,10 @@ fi
 #export HONU_LOCAL_PATH=~/work/shaurya_honu/
 export HONU_LOCAL_PATH=~/work/honu_dev/
 export HONU_EL9_LOCAL_PATH=~/review/rhel9/
+export HONU_OSSL3_LOCAL_PATH=~/review/rhel9/
 export SAFE_LOCAL_PATH=~/work/safe_dev/
-
+export SAFE_POC_PATH=~/work/safeagent-poc/
+export SAFE_MONITOR_PATH=~/work/safe-monitor/
 # Filesystem aliases
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -283,6 +285,7 @@ alias btk="cd ~/work/tako_dev; docker run -it -v ~/work/tako_dev:/tako honu-buil
 # 
 alias bld="./build.sh --no-coverage --no-unit-test -t Debug; mv -f honu-1.2.0-1.el7.x86_64.rpm rpm/"
 alias mist58="cat ~/env/host_list/mist58"
+alias mist100="cat ~/env/host_list/mist100"
 alias mist30="cat ~/env/host_list/mist30_prd"
 alias mist71="cat ~/env/host_list/mist71_xrd"
 alias istla7="grep istla7 ~/env/host_list/lapp_prd | sort "
@@ -301,8 +304,15 @@ alias safe2='cd ~/tanium_dev/safe/tanium_sensor'
 alias ec2='ssh -i ~/tanium_dev/jw_tanium_key1.pem ec2-user@35.88.249.149 ' 
 
 # CipherForce Dev-Work
-alias sb="docker run --name safe-builder -v $SAFE_LOCAL_PATH:/safe_dev -it -d safe-runner"
+alias spb="docker run --pid=host --name safe-poc-builder -v $SAFE_POC_PATH:/safe_dev -it --privileged=true -d safe-runner"
+alias sb="docker run --pid=host --name safe-builder -v $SAFE_LOCAL_PATH:/safe_dev -it --privileged=true -d safe-runner"
+alias sp="docker run --pid=host --name safeagent-poc-builder -v $SAFE_POC_PATH:/safe_dev -it --privileged=true -d safeagent-poc-runner"
+alias sm="docker run --pid=host --name safe-monitor-builder -v $SAFE_MONITOR_PATH:/safe_dev -it --privileged=true -d safe-monitor-runner"
 alias 2sb="docker exec -it safe-builder /bin/bash "
+alias 2spb="docker exec -it safe-poc-builder /bin/bash "
+alias 2sp="docker exec -it safeagent-poc-builder /bin/bash "
+alias 2sm="docker exec -it safe-monitor-builder /bin/bash "
+alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 alias 2cf='cd ~/work/safeagent'
 
 # # 
@@ -310,6 +320,9 @@ alias 2cf='cd ~/work/safeagent'
 # 
 export GPG_TTY=$(tty)
 export GOPATH=$HOME/go:~/work/eitserv/:$HONU_LOCAL_PATH/tako/
+export GOGONOPROXY="git.soma.salesforce.com"
+export GONOSUMD="git.soma.salesforce.com"
+export GOPRIVATE="git.soma.salesforce.com"
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 
 source "$DOTFILES/zsh/utils.zsh"
