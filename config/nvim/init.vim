@@ -138,7 +138,7 @@ iabbrev <expr> dt strftime( "%c")
         Plug 'itchyny/lightline.vim'
         Plug 'nicknisi/vim-base16-lightline'
         let g:lightline = {
-            \   'colorscheme': 'base16',
+            \   'colorscheme': 'solarized',
             \   'active': {
             \       'left': [ [ 'mode', 'paste' ],
             \               [ 'gitbranch' ],
@@ -332,6 +332,16 @@ iabbrev <expr> dt strftime( "%c")
     " better terminal integration
     " substitute, search, and abbreviate multiple variants of a word
     Plug 'tpope/vim-abolish'
+    
+    " k8s 
+    Plug 'andrewstuart/vim-kubernetes'
+    Plug 'fatih/vim-go'
+    Plug 'MunifTanjim/nui.nvim'
+    Plug 'VonHeikemen/fine-cmdline.nvim'
+    Plug 'folke/trouble.nvim'
+    Plug 'rcarriga/nvim-notify'
+
+    nnoremap <Enter> <cmd>FineCmdline<CR>
 
     " easy commenting motions
     Plug 'tpope/vim-commentary'
@@ -495,9 +505,26 @@ iabbrev <expr> dt strftime( "%c")
         let g:fzf_preview_window = ['right:50%:hidden', '?']
         let g:fzf_layout = { 'window': 'call FloatingFZF()' }
     " }}}
+    " Telescope.nvim"
+        Plug 'folke/noice.nvim' 
+        Plug 'folke/todo-comments.nvim' 
+        nnoremap <leader>td :TodoQuickFix<CR> 
+        nnoremap <leader>ts :TodoTelescope<CR>
 
+    " }}}   
+    " Telescope.nvim"
+        Plug 'nvim-lua/plenary.nvim'
+        Plug 'nvim-telescope/telescope.nvim'
+        Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
+        nnoremap <leader>ff :Telescope find_files<CR> 
+        nnoremap <leader>fg :Telescope live_grep<CR> 
+        nnoremap <leader>fb :Telescope buffers<CR> 
+        nnoremap <leader>fh :Telescope help_tags<CR> 
+    " }}}   
     " vim-fugitive {{{
         Plug 'tpope/vim-fugitive'
+        Plug 'lewis6991/gitsigns.nvim'
         nmap <silent> <leader>gs :Gstatus<cr>
         nmap <leader>ge :Gedit<cr>
         nmap <silent><leader>gr :Gread<cr>
@@ -521,6 +548,7 @@ iabbrev <expr> dt strftime( "%c")
 
         let g:coc_global_extensions = [
         \ 'coc-css',
+        \ 'coc-snippets',
         \ 'coc-json',
         \ 'coc-tsserver',
         \ 'coc-git',
@@ -537,6 +565,8 @@ iabbrev <expr> dt strftime( "%c")
         \ 'coc-highlight'
         \ ]
 
+        
+        
         autocmd CursorHold * silent call CocActionAsync('highlight')
 
         " coc-prettier
@@ -584,34 +614,53 @@ iabbrev <expr> dt strftime( "%c")
         endfunction
 
         "tab completion
+        function! CheckBackspace() abort
+          let col = col('.') - 1
+          return !col || getline('.')[col - 1]  =~ '\s'
+        endfunction
+            
+        " Insert <tab> when previous text is space, refresh completion if not.
         inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-        inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
+          \ coc#pum#visible() ? coc#pum#next(1):
+          \ CheckBackspace() ? "\<Tab>" :
+          \ coc#refresh()
+        inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+        
+        " Use <c-space> to trigger completion: >
         if has('nvim')
             inoremap <silent><expr> <c-space> coc#refresh()
         else
             inoremap <silent><expr> <c-@> coc#refresh();
         endif
 
-        function! s:check_back_space() abort
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~# '\s'
-        endfunction
-
         " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
         " position. Coc only does snippet and additional edit on confirm.
         if exists('*complete_info')
             inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
         else
-            imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+            imap <expr> <cr> coc#pum#visible() ? "\<C-y>" : "\<C-g>u\<CR>"
         endif
 
         " For enhanced <CR> experience with coc-pairs checkout :h coc#on_enter()
-        inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+        inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm()
               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+
+        " Use <CR> to confirm completion, use: 
+        inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
+        
+        "Map <tab> for trigger completion, completion confirm, snippet expand and jump
+        "like VSCode: 
+        inoremap <silent><expr> <TAB>
+            \ coc#pum#visible() ? coc#_select_confirm() :
+            \ coc#expandableOrJumpable() ?
+            \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+            \ CheckBackspace() ? "\<TAB>" :
+            \ coc#refresh()
+
+        let g:coc_snippet_next = '<tab>'
+       
+
     " }}}
 " }}}
 
@@ -710,3 +759,22 @@ call plug#end()
 " }}}
 
 " vim:set foldmethod=marker foldlevel=0
+
+" Set the notify function to the plugin
+lua << EOF
+vim.notify = require('notify')
+require('telescope').load_extension('fzf')
+require('telescope').load_extension('notify')
+EOF
+
+    " Use a function to call the notify plugin with a message
+    function! Notify(msg, level)
+        call luaeval('require("notify")(_A.msg, _A.level)', {'msg': a:msg, 'level': a:level})
+    endfunction
+
+    " Example usage
+    " call Notify('This is a notification', 'info')
+
+    nnoremap <leader>nn :call Notify('Notification from key mapping', 'info')<CR>
+
+

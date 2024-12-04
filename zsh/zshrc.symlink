@@ -146,6 +146,10 @@ export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS=" --preview 'bat --color=always --line-range :50 {}'"
+
+export FZF_ALT_C_COMMAND='fd --type d . --color=never --hidden'
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 
 # add color to man pages
 export MANROFFOPT='-c'
@@ -190,7 +194,7 @@ export HONU_LOCAL_PATH=~/work/honu_dev/
 export HONU_EL9_LOCAL_PATH=~/review/rhel9/
 export HONU_OSSL3_LOCAL_PATH=~/review/rhel9/
 export SAFE_LOCAL_PATH=~/work/safe_dev/
-export SAFE_POC_PATH=~/work/safeagent-poc/
+export SAFE_POSTMAN_PATH=~/work/safe-postman/
 export SAFE_MONITOR_PATH=~/work/safe-monitor/
 # Filesystem aliases
 alias ..='cd ..'
@@ -265,6 +269,7 @@ alias cdwsx="ssh shared0-samminioncdws1-1-xrd.eng.sfdc.net "
 
 alias hd="docker run --name honu-dev --cap-add sys_ptrace -p127.0.0.1:2222:22 -v $HONU_LOCAL_PATH:/honu -it -d clion-honu"
 alias 2hd="docker exec -it honu-dev /bin/bash "
+alias runner_el9="docker build -t safe-runner . "
 alias el9="docker build -t honu-el9 $HONU_EL9_LOCAL_PATH:docker/honu_centos7/. "
 alias hb="docker run --name honu-builder -v $HONU_LOCAL_PATH:/honu -it -d honu-builder"
 alias hb9="docker run --name honu-el9-builder -v $HONU_EL9_LOCAL_PATH:/honu -it -d honu-el9-builder"
@@ -286,7 +291,8 @@ alias btk="cd ~/work/tako_dev; docker run -it -v ~/work/tako_dev:/tako honu-buil
 alias bld="./build.sh --no-coverage --no-unit-test -t Debug; mv -f honu-1.2.0-1.el7.x86_64.rpm rpm/"
 alias mist58="cat ~/env/host_list/mist58"
 alias mist100="cat ~/env/host_list/mist100"
-alias mist30="cat ~/env/host_list/mist30_prd"
+alias samtest="cat ~/env/host_list/samtest"
+alias pbs="cat ~/env/host_list/pbsgeo_xrd"
 alias mist71="cat ~/env/host_list/mist71_xrd"
 alias istla7="grep istla7 ~/env/host_list/lapp_prd | sort "
 alias istla4="grep istla4 ~/env/host_list/lapp_prd | sort "
@@ -306,26 +312,74 @@ alias ec2='ssh -i ~/tanium_dev/jw_tanium_key1.pem ec2-user@35.88.249.149 '
 # CipherForce Dev-Work
 alias spb="docker run --pid=host --name safe-poc-builder -v $SAFE_POC_PATH:/safe_dev -it --privileged=true -d safe-runner"
 alias sb="docker run --pid=host --name safe-builder -v $SAFE_LOCAL_PATH:/safe_dev -it --privileged=true -d safe-runner"
+alias pb="docker run --pid=host --name postman-builder -v $SAFE_POSTMAN_PATH:/safe_dev -it --privileged=true docker.repo.local.sfdc.net/sfci/docker-images/sfdc_rhel9_golang:latest"
+alias sb7="docker run --pid=host --name safe-builder7 -v $SAFE_LOCAL_PATH:/safe_dev -it --privileged=true docker.repo.local.sfdc.net/sfci/docker-images/golang_build:latest"
 alias sp="docker run --pid=host --name safeagent-poc-builder -v $SAFE_POC_PATH:/safe_dev -it --privileged=true -d safeagent-poc-runner"
+alias sm9="docker run --pid=host --name safe-monitor-builder9 -v $SAFE_MONITOR_PATH:/safe_dev -it --privileged=true docker.repo.local.sfdc.net/sfci/docker-images/sfdc_rhel9_golang:latest"
 alias sm="docker run --pid=host --name safe-monitor-builder -v $SAFE_MONITOR_PATH:/safe_dev -it --privileged=true -d safe-monitor-runner"
 alias 2sb="docker exec -it safe-builder /bin/bash "
+alias 2sb7="docker exec -it safe-builder7 /bin/bash "
 alias 2spb="docker exec -it safe-poc-builder /bin/bash "
 alias 2sp="docker exec -it safeagent-poc-builder /bin/bash "
-alias 2sm="docker exec -it safe-monitor-builder /bin/bash "
+alias 2pb="docker exec -it postman-builder /bin/bash "
+alias 2sm7="docker exec -it safe-monitor-builder /bin/bash "
+alias 2sm9="docker exec -it safe-monitor-builder9 /bin/bash "
 alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 alias 2cf='cd ~/work/safeagent'
+alias 2sm='cd ~/work/safe-monitor'
+alias 2sa='cd ~/work/safeagent_ga'
+alias 2jb='cd ~/work/safe-jobmanager'
+alias 2sg='cd ~/work/safe-graph'
+alias 2gi='cd ~/work/safe-graph-intake'
+alias 2pm='cd ~/work/safe-postman'
+alias 2ac='cd ~/work/safe-action'
+alias 2sp='cd ~/work/spinnaker'
+alias 2ag='cd ~/work/eks-integrations-argo-workflows'
+alias 2av='cd ~/work/argowf-vmf'
+alias 2sv='cd ~/work/sam-vmf'
+alias 2ba='cd ~/work/go-sfdc-bazel'
 
-# # 
+
+
+alias ed='code '
+alias l="eza -al --header --git --icons"
+alias lr="l --sort=modified"
+alias e='fzf -m --bind ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all --print0 --preview "bat --theme Dracula --color=always {}" | xargs -0 -o $EDITOR'
+# modern replacement of traditional unix command
+alias cat='bat' 
+alias less='bat'
+alias find='fd'
+alias grep='rg'
+alias top='htop'
+alias ls='exa'
+export BAT_THENE='Dracula'
+export MANPAGER="sh -c 'col -bx | bat --theme Coldark-Dark --color=always -l man -p'"
+
+
 # live access
-# 
+ 
 export GPG_TTY=$(tty)
 export GOPATH=$HOME/go:~/work/eitserv/:$HONU_LOCAL_PATH/tako/
+export GOBIN=$HOME/go/bin
 export GOGONOPROXY="git.soma.salesforce.com"
 export GONOSUMD="git.soma.salesforce.com"
 export GOPRIVATE="git.soma.salesforce.com"
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+export GOROOT=/usr/local/go
 
 source "$DOTFILES/zsh/utils.zsh"
 source "$DOTFILES/zsh/prompt.zsh"
 #export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$HOME/bin:$HOME/go/bin:/usr/local/opt/openjdk/bin:$PATH"
+
+#Argo workflow environment settings
+export ARGO_SERVER='argo-workflows1.sfproxy.foundation.fdev1-uswest2.aws.sfdc.cl:443' 
+export ARGO_HTTP1=true  
+export ARGO_SECURE=true
+export ARGO_BASE_HREF=
+export ARGO_TOKEN='[REDACTED]' 
+export ARGO_NAMESPACE=argo-workflows ;# or whatever your namespace is 
+
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

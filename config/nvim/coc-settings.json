@@ -20,6 +20,14 @@
                     "directory": "/tmp/ccls"
                 }
             }
+        },
+        "golang" :{
+            "command": "gopls",
+            "rootPatterns": ["go.mod"],
+            "filetypes":["go"]
         }
+    },
+    "yaml.schemas": {
+        "kubernetes":"/*.yaml"
     }
 }
